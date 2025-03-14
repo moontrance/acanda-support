@@ -49,29 +49,33 @@
     </form>
     <p id="status"></p>
 
-    <script>
-        document.getElementById("supportForm").addEventListener("submit", async function(event) {
-            event.preventDefault();
-            
-            let name = document.getElementById("name").value;
-            let email = document.getElementById("email").value;
-            let detail = document.getElementById("detail").value;
-
-            let response = await fetch("https://ryzxmuybprgztjhxeunj.supabase.co/functions/v1/support-request", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name, email, detail })
-            });
-
-            let status = document.getElementById("status");
-            if (response.ok) {
-                status.textContent = "Support request submitted successfully!";
-                status.style.color = "green";
-            } else {
-                status.textContent = "Failed to submit request. Please try again.";
-                status.style.color = "red";
-            }
+<script>
+    document.getElementById("supportForm").addEventListener("submit", async function(event) {
+        event.preventDefault();
+    
+        let name = document.getElementById("name").value;
+        let email = document.getElementById("email").value;
+        let detail = document.getElementById("detail").value;
+    
+        let response = await fetch("https://ryzxmuybprgztjhxeunj.co/functions/v1/support-request", {
+            method: "POST",
+            headers: { 
+                "Content-Type": "application/json",
+                "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ5enhtdXlicHJnenRqaHhldW5qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjcxMTE5NzgsImV4cCI6MjA0MjY4Nzk3OH0.cB_RW-94haD5deKGh3gfsHpRB4e6NNSFMTBImhbCYl4"  // Add this line
+            },
+            body: JSON.stringify({ name, email, detail })
         });
+    
+        let status = document.getElementById("status");
+        if (response.ok) {
+            status.textContent = "Support request submitted successfully!";
+            status.style.color = "green";
+        } else {
+            status.textContent = "Failed to submit request. Please try again.";
+            status.style.color = "red";
+        }
+    });
     </script>
+    
 </body>
 </html>
