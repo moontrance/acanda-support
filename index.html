@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Request</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            text-align: center;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        p {
+            font-size: 14px;
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+    <h2>Submit a Support Request</h2>
+    <form id="supportForm">
+        <input type="text" id="name" placeholder="Your Name" required>
+        <input type="email" id="email" placeholder="Your Email" required>
+        <textarea id="detail" placeholder="Describe your issue" rows="4" required></textarea>
+        <button type="submit">Submit</button>
+    </form>
+    <p id="status"></p>
+
+    <script>
+        document.getElementById("supportForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+            
+            let name = document.getElementById("name").value;
+            let email = document.getElementById("email").value;
+            let detail = document.getElementById("detail").value;
+
+            let response = await fetch("https://your-project.supabase.co/functions/v1/support-request", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, email, detail })
+            });
+
+            let status = document.getElementById("status");
+            if (response.ok) {
+                status.textContent = "Support request submitted successfully!";
+                status.style.color = "green";
+            } else {
+                status.textContent = "Failed to submit request. Please try again.";
+                status.style.color = "red";
+            }
+        });
+    </script>
+</body>
+</html>
